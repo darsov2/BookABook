@@ -1,0 +1,103 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+
+      @if (this.isLoading) {
+        <app-table-loader [fields]="fields" [numberOfRows]="10"></app-table-loader>
+      } @else {
+        <p-toast></p-toast>
+        <p-table #dt [value]="books != undefined ? books : []" [columns]="cols" responsiveLayout="scroll"
+                 [rows]="10" [globalFilterFields]="['name','country.name','representative.name','status']"
+                 [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true"
+                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 [(selection)]="selectedBooks" selectionMode="multiple" [rowHover]="true" dataKey="id">
+          <ng-template pTemplate="caption">
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <h5 class="m-0">Manage Wishlist</h5>
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" placeholder="Search..." class="w-full sm:w-auto" />
+                        </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 3rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              @for (item of cols; track $index) {
+                <th pSortableColumn="{{ item.field }}">{{ item.header }} <p-sortIcon field="{{ item.field }}"></p-sortIcon></th>
+              }
+              <!-- <th pSortableColumn="code">Code <p-sortIcon field="code"></p-sortIcon></th>
+              <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+              <th>Image</th>
+              <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+              <th pSortableColumn="categories">Category <p-sortIcon field="categories"></p-sortIcon></th>
+              <th pSortableColumn="averageRating">Reviews <p-sortIcon field="averageRating"></p-sortIcon></th>
+              <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon> -->
+              <!-- </th> -->
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-book>
+            <tr>
+              <td>
+                <p-tableCheckbox [value]="book"></p-tableCheckbox>
+              </td>
+              <td style="width:14%; min-width:10rem;"><span class="p-column-title">Code</span>
+                {{book.code || book.id}}
+              </td>
+              <td style="width:14%; min-width:10rem;">
+                <span class="p-column-title">Name</span>
+                {{book.name}}
+              </td>
+              <td style="width:14%; min-width:10rem;"><span class="p-column-title">Image</span>
+                <img [src]="book.imgUrl" [alt]="book.name" width="100" class="shadow-4" />
+              </td>
+              <td style="width:14%; min-width:8rem;">
+                <span class="p-column-title">Price</span>
+                {{book.isbn}}
+              </td>
+              <td style="width:14%; min-width:10rem;">
+                <span class="p-column-title">Category</span>
+                <div class="flex flex-column">
+                  @for (category of book.categories; track $index) {
+                    <p-tag class="my-1" value="{{category}}"></p-tag>
+                  }
+                </div>
+              </td>
+              <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Reviews</span>
+                <p-rating [ngModel]="book.averageRating" [readonly]="true" [cancel]="false"></p-rating>
+              </td>
+              <td style="width:14%; min-width: 10rem;"><span class="p-column-title">Status</span>
+                @for (author of book.authors; track $index) {
+                  <p>{{ author }}</p>
+                }
+              </td>
+              <td>
+                <div class="flex">
+                  <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
+                          (click)="deleteProduct(book)"></button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      }
+
+    </div>
+
+    <p-dialog [(visible)]="deleteProductDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span *ngIf="book">Are you sure you want to delete <b>{{ book.name }}</b> from the wishlist?</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No"
+                (click)="deleteProductDialog = false"></button>
+        <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes"
+                (click)="confirmDelete()"></button>
+      </ng-template>
+    </p-dialog>
+  </div>
+</div>

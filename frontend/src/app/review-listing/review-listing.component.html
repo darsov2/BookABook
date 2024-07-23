@@ -1,0 +1,22 @@
+
+<p-fieldset class="w-100">
+    <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 px-2 b-0">
+            <p-avatar 
+                image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" 
+                shape="circle" />
+            <span class="font-bold">Amy Elsner {{review?.userId}}</span>
+        </div>
+    </ng-template>
+    <p class="m-0">
+        {{review?.description}}
+    </p>
+    <div class="flex justify-content-between pt-2">
+        <div></div>
+        <p-rating [cancel]="false"
+                [readonly]="true" 
+                [(ngModel)]="value"
+        />
+    </div>
+</p-fieldset>
+

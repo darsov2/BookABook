@@ -1,0 +1,88 @@
+@if (loanBooks) {
+  <p-card header="On Loan">
+    <div class="grid">
+      <div class="md:col-9 lg:col-10">
+        <carousel-book-card *ngIf="loanBooks" [books]="loanBooks"></carousel-book-card>
+      </div>
+      <div class="md:col-3 lg:col-2 flex flex-column align-items-center h-100 justify-content-center">
+        <a [routerLink]="['/books']">
+          <div style="min-height: 25rem"
+               class="border-2 border-dashed surface-border border-round surface-ground flex-column p-5 text-center flex justify-content-center align-items-center font-medium h-100">
+            <i class="pi pi-plus" style="font-size: 2.5rem"></i>
+            <h3>Borrow more books</h3>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </p-card>
+
+}
+<p-card class="m-4" header="Popular Books">
+  <div class="grid">
+    <div class="col-12">
+      <carousel-book-card *ngIf="popularBooks" [books]="popularBooks"></carousel-book-card>
+    </div>
+  </div>
+</p-card>
+
+
+<div class="grid">
+  <div class="col-4">
+    <p-card class="m-4" header="Popular Authors">
+      @for (author of popularAuthors; track $index) {
+        <div class="flex flex-wrap p-2 align-items-center gap-3 border-bottom-1 border-200">
+          <p-avatar
+            label="{{ author.name[0] }}"
+            styleClass="mr-2"
+            size="large"
+            [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }"
+            shape="circle"/>
+          <div class="flex-1 flex flex-column gap-2">
+            <span class="font-bold">{{ author.name + ' ' + author.lastName }}</span>
+          </div>
+        </div>
+      }
+    </p-card>
+  </div>
+  <div class="col-4">
+    <p-card class="m-4" header="Popular Stores">
+      @for (author of popularStores; track $index) {
+        <div class="flex flex-wrap p-2 align-items-center gap-3 border-bottom-1 border-200">
+          <p-avatar
+            label="{{ author.name[0] }}"
+            styleClass="mr-2"
+            size="large"
+            [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }"
+            shape="circle"/>
+          <div class="flex-1 flex flex-column gap-2">
+            <span class="font-bold">{{ author.libraryName }}</span>
+            <div class="flex align-products-center gap-2">
+              <i class="pi pi-shop text-sm"></i>
+              <span>{{ author.name }}</span>
+            </div>
+          </div>
+        </div>
+      }
+    </p-card>
+  </div>
+  <div class="col-4">
+    <p-card class="m-4" header="Popular Categories">
+      @for (author of popularCategories; track $index) {
+        <div class="flex flex-wrap p-2 align-items-center gap-3 border-bottom-1 border-200">
+          <p-avatar
+            label="{{ author.name[0] }}"
+            styleClass="mr-2"
+            size="large"
+            [style]="{ 'background-color': '#ece9fc', color: '#2a1261' }"
+            shape="circle"/>
+          <div class="flex-1 flex flex-column gap-2">
+            <span class="font-bold">{{ author.name }}</span>
+          </div>
+
+        </div>
+      }
+    </p-card>
+  </div>
+</div>
+

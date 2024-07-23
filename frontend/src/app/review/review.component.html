@@ -1,0 +1,33 @@
+
+<form style="height: 18em;">
+    <textarea style="width: 100%; height: 86%;"
+        pInputTextarea
+        placeholder="The book was amazing..."
+        #inputText
+        ></textarea>
+    <!-- <p-button
+    label="Search"
+    icon="pi pi-check"
+    [loading]="loading"
+    (onClick)="load()" /> -->
+    <div class="flex justify-content-between pt-2">
+        <div class="align-self-center px-2">
+            <p-rating [cancel]="false"
+            (onRate)="onRate($event)"
+            [iconOnStyle]="{'transform': 'scale(1.5)', 'padding': '0.5em'}"
+            [iconOffStyle]="{'transform': 'scale(1.5)', 'padding': '0.5em'}"
+            />
+        </div>
+        <div>
+            <p-button
+            [disabled]="isDisabled"
+            (click)="onSubmit($event, inputText.value)"
+            [loading]="loading"
+            class="pt-2"
+            label="Sumbit"
+            icon="pi pi-check"
+            />
+        </div>
+    </div>
+  <p-toast></p-toast>
+</form>

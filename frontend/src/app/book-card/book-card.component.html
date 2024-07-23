@@ -1,0 +1,12 @@
+<div class="card my-5 border-none" style="width: 18rem;">
+    <img src={{book?.imgUrl}} [style]="{width: '100%'}" class="card-img-top" alt="book_image">
+    <div class="card-body text-center">
+      <h5 class="card-title" style="padding-top: 1.6em;">{{book?.name}}</h5>
+      @for (author of book?.authors; track $index) {
+        <p class="card-text text-overflow-ellipsis">{{author}}</p>
+      }
+    </div>
+</div>
+
+
+

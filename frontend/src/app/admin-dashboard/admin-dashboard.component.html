@@ -1,0 +1,25 @@
+<div class="grid">
+  <div class="col-4">
+    <p-card header="Inventory Status">
+      <p class="m-0">
+        Percentage of books that are not lent
+      </p>
+      <p-progressBar [value]="inventoryPercentage | number: '3.1-1' " />
+    </p-card>
+  </div>
+  <div class="col-4">
+    <p-card header="Stock Status">
+      <p class="m-0">
+        Percentage of books that are available in this store
+        <p-progressBar [value]="inventoryPercentage | number: '3.1-1'" />
+      </p>
+    </p-card>
+  </div>
+  <div class="col-4">
+    <p-card header="Simple Card">
+      <p class="m-0">
+        Lorem ipsum dolor sit amet...
+      </p>
+    </p-card>
+  </div>
+</div>

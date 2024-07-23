@@ -1,0 +1,25 @@
+<div style="display: block; height: 9em;">
+    <div style="display: flex;">
+        <div class="p-toolbar-group-center" style="flex-grow: 7;">
+            <span class="p-input-icon-left" style="width: 90%;">
+                <i class="pi pi-search" style="font-size: 1.3em"></i>
+                <input pInputText placeholder="Search" style="width: 100%; font-size: 1.3em" />
+            </span>
+        </div>
+        <div style="flex-grow: 1;">
+            <p-dropdown
+            [style]="{'height': '3em !important'}"
+            [options]="categories"
+            optionLabel="name" 
+            placeholder="Select a categoriy" />
+        </div>
+    </div>
+    <div style="width: 70%;margin: auto">
+        <div class="alphabet my-5">
+            @for (letter of alphabet; track $index) {
+                <div [routerLink]="['books', letter]" class="letter">{{letter}}</div>
+            }
+        </div>
+    </div>
+</div>
+<router-outlet ></router-outlet>

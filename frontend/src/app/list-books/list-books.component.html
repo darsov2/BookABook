@@ -1,0 +1,18 @@
+<search></search>
+@if (loading) {
+    <h1>loading...</h1>
+}
+@else {
+  @if(listType === 'user'){
+    @for (letter of topBookByLetters | keyvalue; track $index) {
+      <p style="font-size: xx-large;" class="p-0 m-0">{{letter.key}}</p>
+      <hr class="p-0 m-0"/>
+      <carousel-book-card [books]="letter.value"></carousel-book-card>
+    }
+  } @else if (listType == 'admin')
+  {
+    @for (letter of topBookByLetters | keyvalue; track $index) {
+
+    }
+  }
+}

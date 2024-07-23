@@ -1,0 +1,157 @@
+<p-stepper>
+  <p-stepperPanel header="Choose book...">
+    <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+      <div style="display: flex;">
+        <div class="p-toolbar-group-center" style="flex-grow: 7;">
+            <span class="p-input-icon-left" style="width: 90%;">
+                <i class="pi pi-search" style="font-size: 1.3em"></i>
+                <input pInputText placeholder="Search" style="width: 90%; font-size: 1.3em"/>
+            </span>
+        </div>
+      </div>
+      <div style="width: 70%;margin: auto">
+        <div class="alphabet my-5">
+          @for (letter of alphabet; track $index) {
+            <div class="letter" (click)="filterByLetter(letter.toString())">{{ letter }}</div>
+          }
+        </div>
+      </div>
+      @if (loading) {
+        <h1>loading...</h1>
+      } @else {
+        @for (letter of topBookByLetters | keyvalue; track $index) {
+          <div class="mb-5">
+            <p style="font-size: xx-large;" class="p-0 m-0">{{ letter.key }}</p>
+            <hr class="p-0 m-0 mb-4"/>
+            @for (book of letter.value ? letter.value : []; track $index) {
+              <app-lending-book-details (chosenBookCopy)="chosenBook($event)" class="" [prevCallback]="nextCallback"
+                                        [book]="book" *ngIf="nextCallback"></app-lending-book-details>
+            }
+          </div>
+        }
+      }
+      <div class="flex pt-4 justify-content-end">
+        <p-button
+          label="Next"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          (onClick)="nextCallback.emit()"/>
+      </div>
+    </ng-template>
+  </p-stepperPanel>
+  <p-stepperPanel header="Choose user...">
+    <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-index="index">
+      <div class="flex flex-column">
+        <div style="display: flex;">
+          <div class="p-toolbar-group-center" style="flex-grow: 7;">
+            <form (submit)="findUser($event)">
+            <span class="p-input-icon-left flex" style="width: 90%;">
+
+              <i class="pi pi-search" style="font-size: 1.3em"></i>
+              <input [(ngModel)]="userSearch" name="userSearch" pInputText placeholder="Enter User ID" style="width: 90%; font-size: 1.3em"/>
+            </span>
+            </form>
+          </div>
+        </div>
+        <div class="flex flex-column w-70 mt-3">
+          @if (userLoading) {
+            <app-user-card-loader></app-user-card-loader>
+          } @else {
+            <div class="border-round border-1 surface-border p-4 surface-card w-100">
+              <div class="flex mb-3" style="max-width:100%">
+                <div class="flex align-items-center gap-2 px-2">
+                  <p-avatar
+                    image="{{ userToDisplay?.imgUrl }}"
+                    shape="circle"
+                  size="xlarge"/>
+                  <div>
+                  <span class="text-xl font-bold">{{ userToDisplay?.name + " " + userToDisplay?.lastName }}</span>
+                  <br/>
+                  <span class="text-lg font-bold">{{ userToDisplay?.email }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        <div class="flex pt-4 justify-content-between">
+          <p-button
+            label="Back"
+            icon="pi pi-arrow-left"
+            (onClick)="prevCallback.emit()"/>
+          <p-button
+            label="Next"
+            icon="pi pi-arrow-right"
+            iconPos="right"
+            (onClick)="nextCallback.emit()"/>
+        </div>
+      </div>
+
+    </ng-template>
+  </p-stepperPanel>
+  <p-stepperPanel header="Confirm Lending">
+    <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
+      <div class="flex flex-column ">
+        <p-panel header="Selected User">
+          <div class="flex mb-3" style="max-width:100%">
+            <div class="flex align-items-center gap-2 px-2">
+              <p-avatar
+                image="{{ userToDisplay?.imgUrl }}"
+                shape="circle"
+                size="xlarge"/>
+              <div>
+                <span class="text-xl font-bold">{{ userToDisplay?.name + " " + userToDisplay?.lastName }}</span>
+                <br/>
+                <span class="text-lg font-bold">{{ userToDisplay?.email }}</span>
+              </div>
+            </div>
+          </div>
+        </p-panel>
+        <p-panel header="Selected Book" class="mt-3">
+          <div class="flex mb-3" style="max-width:100%">
+            <div class="col">
+              <div class="text-center p-3 border-round-sm font-bold">
+                <p-image
+                  src="{{ book?.imgUrl }}"
+                  alt="Image"
+                  height="300em"
+                  [preview]="true" />
+              </div>
+            </div>
+            <div class="col">
+              <div class="text-center p-3 border-round-sm font-bold ">
+                <p class="font-bold" style="font-size: 2.5em;">{{book?.name}}</p>
+                @for (author of book?.authors; track $index) {
+                  <p class="text-3xl font-semibold">{{author}}</p>
+                }
+                <p>Copy contidion: </p>
+                @for (category of book?.categories; track $index) {
+                  @if (book?.categories?.length == $index) {
+                    <p>{{category}}</p>
+                  }
+                  @else {
+                    <p>{{category}}</p>
+                  }
+                }
+                <p>ISBN: {{book?.isbn}}</p>
+              </div>
+            </div>
+          </div>
+        </p-panel>
+      </div>
+      <div class="flex pt-4 justify-content-between">
+        <p-button
+          label="Back"
+          icon="pi pi-arrow-left"
+          (onClick)="prevCallback.emit()"/>
+        <p-button
+          label="Confirm"
+          icon="pi pi-arrow-right"
+          iconPos="right"
+          (onClick)="confirmLending()"
+        />
+      </div>
+    </ng-template>
+  </p-stepperPanel>
+</p-stepper>
+<p-toast></p-toast>

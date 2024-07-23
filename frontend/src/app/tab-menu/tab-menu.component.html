@@ -1,0 +1,16 @@
+<div class="card" >
+    <p-tabMenu [model]="items" [activeItem]="activeItem" [style]="{'font-size': '2em', 'margin-top': '-0.8em', 'padding-bottom': '0.8em'}"/>
+  <div style="min-height: 30vh">
+    @if (activeItem?.label === "Description") {
+      <p class="text-xl font-normal text-justify">
+        {{book?.description}}
+      </p>
+    }
+    @else if (activeItem?.label === "Availability") {
+      <accordion [book]="book" *ngIf="book"></accordion>
+    }
+    @else if (activeItem?.label === "Leave Review") {
+      <review [book]="book"/>
+    }
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<!--<p-growl [value]="msgs" sticky="sticky"></p-growl>-->
+
+<div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
+      <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
+        <div class="text-center mb-5">
+          <div class="text-900 text-3xl font-medium mb-3">Welcome!</div>
+          <span class="text-600 font-medium">Register to continue</span>
+        </div>
+
+        <div>
+          <form [formGroup]="userForm!" (ngSubmit)="onSubmit(userForm?.value)">
+              <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-6">
+                    <label for="firstname" class="block text-900 text-xl font-medium mb-2">First Name</label>
+                    <input pInputText type="text" formControlName="firstName" placeholder="{{'Enter first name:'}}" class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+                  </div>
+                  <div class="ui-grid-col-4">
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm?.controls?.['firstname']?.valid&&userForm?.controls?.['firstname']?.dirty">
+                      <i class="fa fa-close"></i>
+                      {{'Firstname is required'}}
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-6">
+                    <label for="firstname" class="block text-900 text-xl font-medium mb-2">Last Name</label>
+                    <input pInputText type="text" formControlName="lastName" placeholder="{{'Enter lastname'}}"  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+                  </div>
+                  <div class="ui-grid-col-4">
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm?.controls?.['lastname']?.valid && userForm?.controls?.['lastname']?.dirty">
+                      <i class="fa fa-close"></i>
+                      {{'Lastname is required'}}
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-6">
+                    <label for="firstname" class="block text-900 text-xl font-medium mb-2">Email</label>
+                    <input pInputText type="text" formControlName="email" placeholder="{{'Enter email'}}"  class="w-full md:w-30rem mb-5" style="padding:1rem"/>
+                  </div>
+                  <div class="ui-grid-col-4">
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm?.controls?.['email']?.valid && userForm?.controls?.['email']?.dirty">
+                      <i class="fa fa-close"></i>
+                      {{'Email is required'}}
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-6">
+                    <label for="firstname" class="block text-900 text-xl font-medium mb-2">Password</label>
+                    <p-password styleClass="mb-5" inputStyleClass="w-full p-3 md:w-30rem" type="password" formControlName="password" placeholder="{{'Enter password'}}"  [toggleMask]="true" />
+                  </div>
+                  <div class="ui-grid-col-4">
+                    <div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm?.controls?.['password']?.valid && userForm?.controls?.['password']?.dirty">
+                      <i class="fa fa-close"></i>
+                      <span *ngIf="userForm?.controls?.['password']?.errors?.['required']">{{'Password is required'}}</span>
+                      <span *ngIf="userForm?.controls?.['password']?.errors?.['minlength']">{{'Must be longer than 6 characters'}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-grid-row">
+                  <div class="ui-grid-col-6">
+                    <button pButton type="submit" label="Submit" [disabled]="!userForm?.valid" class="w-full p-3 text-xl"></button>
+                  </div>
+                  <div class="ui-grid-col-4"></div>
+                </div>
+                <div style="text-align:center;margin-top:20px" *ngIf="submitted">
+                  {{'Form Submitted'}}
+                  <br>
+                </div>
+              </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-toast></p-toast>
+

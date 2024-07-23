@@ -1,0 +1,51 @@
+<p-accordion>
+    @for (book of bookAvailability; track $index) {
+        <p-accordionTab >
+            <ng-template pTemplate="header">
+                <span class="flex align-items-center gap-2 w-full">
+                    {{book.libraryName}}
+                </span>
+                <span>
+<!--                  <i class="pi pi-chevron-circle-down" style="font-size: 1.5em"></i>-->
+                </span>
+            </ng-template>
+            @for (store of book.storesAvailability; track $index) {
+                <div class="flex justify-content-between border-2 m-2 border-round border-gray-100 p-2">
+                    <div class="flex align-items-center">
+                      <i [style]="{color: getStatusColor(store.statusCode)}" class="pi pi-circle-on pl-1 pr-4"></i>
+                      <p class="vertical-align-middle m-0">
+                        {{store.storeName}}<br> {{store.storeAddress}}
+                      </p>
+                    </div>
+                  <div class="flex align-items-center">
+                    <span class="px-5">
+                      In Stock: {{store.quantity}}
+                    </span>
+                      <p-button 
+                      (click)="onReserve(store.storeId)" 
+                      [icon]="btn_icon" 
+                      [severity]="btn_sev" 
+                      [label]="reservationLabel" 
+                      [loading]="loading_btn"
+                      [disabled]="btn_disabled"></p-button>
+                  </div>
+                </div>
+            }
+        </p-accordionTab>
+    }
+    @if(bookAvailability?.length == 0)
+    {
+      <p class="text-xl font-normal text-center">
+        {{description}}
+      </p>
+      <div class="flex justify-content-center">
+        <p-button 
+        [label]="label" 
+        [icon]="icon" 
+        [loading]="loadingButton"
+        [disabled]="isDisabled"
+        (click)="onSubmit()"
+        />
+      </div> 
+    }
+</p-accordion>

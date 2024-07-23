@@ -1,0 +1,17 @@
+<div class="card">
+    <p-carousel 
+        [value]="reviews" 
+        [numVisible]="1" 
+        [numScroll]="1" 
+        [circular]="true"
+        >
+        <ng-template let-review pTemplate="item">
+            @if (loading){
+                <review-loader></review-loader>
+            }
+            @else {
+                <review-listing [review]="review"></review-listing>
+            }
+        </ng-template>
+    </p-carousel>
+</div>

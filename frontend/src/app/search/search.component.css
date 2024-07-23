@@ -1,0 +1,29 @@
+.alphabet {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 1.3em;
+}
+
+.letter{
+    user-select: none;
+    max-height: 1em;
+}
+
+.letter:hover {
+    zoom: 1.2;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 1024px) {
+    .letter {
+        display: none !important;
+    }
+}
+
+:host ::ng-deep .p-dropdown-label {
+    font-size: 1.3em !important;
+}
+
+:host ::ng-deep .p-dropdown- {
+    height: 3em;
+}
